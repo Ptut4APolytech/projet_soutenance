@@ -10,22 +10,50 @@ on:
     branches: [ "develop" ]
 
 jobs:
-  build:
-
+  build-frontend:
+    defaults:
+      run:
+        working-directory: 'frontend'
     runs-on: ubuntu-latest
 
-    strategy:
-      matrix:
-        node-version: [14.x, 16.x, 18.x]
-        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
-
     steps:
-    - uses: actions/checkout@v3
-    - name: Use Node.js ${{ matrix.node-version }}
+    - name: Checkout
+      uses: actions/checkout@v3
+
+    - name: Setup NodeJS 18.10.x
       uses: actions/setup-node@v3
       with:
-        node-version: ${{ matrix.node-version }}
+        node-version: 18.10.x
         cache: 'npm'
-    - run: npm ci
-    - run: npm run build --if-present
-    - run: npm test
+        cache-dependency-path: frontend/package-lock.json
+    - name: Install Dependencies
+      run: npm ci
+    - name: Build project
+      run: npm run build --if-present
+    #TODO: Uncomment when tests are present
+    #- name: Test project
+    #run: npm run test:headless
+    
+  build-backend:
+    defaults:
+      run:
+        working-directory: 'backend'
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+
+    - name: Setup NodeJS 18.10.x
+      uses: actions/setup-node@v3
+      with:
+        node-version: 18.10.x
+        cache: 'npm'
+        cache-dependency-path: backend/package-lock.json
+    - name: Install Dependencies
+      run: npm ci
+    - name: Build project
+      run: npm run build --if-present
+    #TODO: Uncomment when Tests are present
+    #- name: Test project
+    #  run: npm test --if-present
