@@ -1,19 +1,22 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { MatSliderModule } from '@angular/material/slider';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { LoginComponent } from './login/login.component';
 import {MatCardModule} from "@angular/material/card";
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {ReactiveFormsModule} from "@angular/forms";
+import { LoginViewComponent } from './login/login-view/login-view.component';
+import { ResetPasswordViewComponent } from './login/reset-password-view/reset-password-view.component';
+import { LoginFormComponent } from './login/login-form/login-form.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent
+    LoginViewComponent,
+    ResetPasswordViewComponent,
+    LoginFormComponent
   ],
   imports: [
     BrowserModule,
