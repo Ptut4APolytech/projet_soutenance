@@ -1,4 +1,4 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup} from "@angular/forms";
 
 @Component({
@@ -7,8 +7,6 @@ import {FormControl, FormGroup} from "@angular/forms";
   styleUrls: ['./login-form.component.scss']
 })
 export class LoginFormComponent implements OnInit {
-  @Output() submitEM = new EventEmitter();
-  //@Input() error: string | null;
 
   constructor() { }
 
@@ -21,9 +19,7 @@ export class LoginFormComponent implements OnInit {
   });
 
   submit() {
-    if (this.form.valid) {
-      this.submitEM.emit(this.form.value);
-    }
+    // TODO
   }
 
 
