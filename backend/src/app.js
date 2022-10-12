@@ -11,16 +11,15 @@ app.use(cors(corsOptions))
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
-const dbConfig = require("./config/db.config")
 const Sequelize = require("sequelize")
-const sequelize = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
-    host: dbConfig.HOST,
-    dialect: dbConfig.dialect,
+const sequelizeConfig = new Sequelize(process.env.DB_HOST, process.env.DB_USER, process.env.DB_PASSWORD, {
+    host: process.env.DB_HOST,
+    dialect: "mysql"
 })
 
 const db = {};
 db.Sequelize = Sequelize;
-db.sequelize = sequelize;
+db.sequelize = sequelizeConfig;
 
 // TODO: add models here
 
