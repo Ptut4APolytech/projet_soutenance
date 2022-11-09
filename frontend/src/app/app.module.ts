@@ -9,20 +9,26 @@ import { LoginViewComponent } from './login/login-view/login-view.component';
 import { ResetPasswordViewComponent } from './login/reset-password-view/reset-password-view.component';
 import { LoginFormComponent } from './login/login-form/login-form.component';
 import { MaterialModule } from "./material.module";
+import {HeaderComponent} from "./header/header.component";
+import {FooterComponent} from "./footer/footer.component";
+import {MatMenuModule} from "@angular/material/menu";
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginViewComponent,
     ResetPasswordViewComponent,
-    LoginFormComponent
+    LoginFormComponent,
+    HeaderComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     MaterialModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatMenuModule
   ],
   providers: [],
   bootstrap: [AppComponent]
