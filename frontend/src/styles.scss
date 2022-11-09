@@ -34,6 +34,10 @@ $poly-soutenances-theme: mat.define-light-theme((
 @include mat.all-component-themes($poly-soutenances-theme);
 
 /* You can add global styles to this file, and also import other style files */
-
+:root {
+  --poly-soutenances-primary: #3f51b5;
+  --poly-soutenances-accent: #e91e63;
+  --poly-soutenances-warn: #f44336;
+}
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
