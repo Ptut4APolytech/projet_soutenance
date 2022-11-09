@@ -1,0 +1,16 @@
+.login-view{
+  background-color: #217074;
+  padding: 2rem;
+}
+
+mat-card{
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  width: 60%;
+  margin: auto;
+}
+
+mat-card-title {
+  margin: 2rem 0 2rem !important;
+}
