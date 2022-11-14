@@ -13,6 +13,8 @@ import {HeaderComponent} from "./header/header.component";
 import {FooterComponent} from "./footer/footer.component";
 import {MatMenuModule} from "@angular/material/menu";
 import { LoginFirstComponent } from './login/login-first/login-first.component';
+import {AdminOverviewComponent} from "./admin/admin-overview/admin-overview.component";
+import {AdminComponent} from "./admin/admin.component";
 
 @NgModule({
   declarations: [
@@ -22,7 +24,9 @@ import { LoginFirstComponent } from './login/login-first/login-first.component';
     LoginFormComponent,
     LoginFirstComponent,
     HeaderComponent,
-    FooterComponent
+    FooterComponent,
+    AdminComponent,
+    AdminOverviewComponent
   ],
   imports: [
     BrowserModule,
