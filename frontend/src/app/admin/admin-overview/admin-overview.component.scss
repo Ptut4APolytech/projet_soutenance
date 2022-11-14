@@ -1,0 +1,20 @@
+.container {
+  text-align: center;
+  margin-top: 4rem;
+}
+
+.spacer {
+  margin: 4rem;
+}
+
+ul.buttons {
+  display: flex;
+  justify-content: center;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+ul.buttons li {
+  padding: 0 1rem;
+}
