@@ -9,12 +9,16 @@
       <form [formGroup]="form" (ngSubmit)="submit()">
         <p>
           <mat-form-field>
-            <input matInput type="password" placeholder="Nouveau mot de passe" formControlName="password">
+            <mat-label>Nouveau mot de passe</mat-label>
+            <input matInput type="password" formControlName="password">
+            <mat-icon matSuffix>lock</mat-icon>
           </mat-form-field>
         </p>
         <p>
           <mat-form-field>
-            <input matInput type="password" placeholder="Répétez le mot de passe" formControlName="passwordConfirm">
+            <mat-label>Répétez le mot de passe</mat-label>
+            <input matInput type="password" formControlName="passwordConfirm">
+            <mat-icon matSuffix>lock</mat-icon>
           </mat-form-field>
         </p>
         <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid">Mettre à jour le mot de passe</button>

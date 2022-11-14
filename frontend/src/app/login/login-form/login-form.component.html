@@ -1,13 +1,17 @@
 <form [formGroup]="form" (ngSubmit)="submit()">
   <p>
     <mat-form-field>
-      <input type="text" matInput placeholder="Identifiant" formControlName="username">
+      <mat-label>Identifiant</mat-label>
+      <input type="text" matInput formControlName="username">
+      <mat-icon matSuffix>person_outline</mat-icon>
     </mat-form-field>
   </p>
 
   <p>
     <mat-form-field>
-      <input type="password" matInput placeholder="Mot de passe" formControlName="password">
+      <mat-label>Mot de passe</mat-label>
+      <input type="password" matInput formControlName="password">
+      <mat-icon matSuffix>lock</mat-icon>
     </mat-form-field>
   </p>
 
