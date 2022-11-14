@@ -6,5 +6,10 @@ services:
       - "8000:80"
   mysql:
     build: backend/db
+    volumes:
+      - ./mysql-data:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=polysoutenance
   api:
     build: backend/api
