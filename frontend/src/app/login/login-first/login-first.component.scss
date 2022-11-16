@@ -1,0 +1,21 @@
+.center-vertically {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.center-horizontally {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+mat-card {
+  text-align: center;
+}
+
+.form-desc {
+  padding: 10px;
+  text-justify: auto;
+}

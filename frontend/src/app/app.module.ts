@@ -12,6 +12,7 @@ import { MaterialModule } from "./material.module";
 import {HeaderComponent} from "./header/header.component";
 import {FooterComponent} from "./footer/footer.component";
 import {MatMenuModule} from "@angular/material/menu";
+import { LoginFirstComponent } from './login/login-first/login-first.component';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import {MatMenuModule} from "@angular/material/menu";
     LoginViewComponent,
     ResetPasswordViewComponent,
     LoginFormComponent,
+    LoginFirstComponent,
     HeaderComponent,
     FooterComponent
   ],

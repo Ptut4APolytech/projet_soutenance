@@ -1,0 +1,29 @@
+<div class="center-horizontally center-vertically">
+  <mat-card>
+    <mat-card-title>
+      <p>Première connexion ?</p>
+      <p>Créez un nouveau mot de passe</p>
+    </mat-card-title>
+    <mat-card-content>
+      <p class="form-desc">Votre mot de passe doit contenir au moins 8 caractères et au moins 3 des types de caractères suivants : minuscule, majuscule, numérique et spécial</p>
+      <form [formGroup]="form" (ngSubmit)="submit()">
+        <p>
+          <mat-form-field>
+            <mat-label>Nouveau mot de passe</mat-label>
+            <input matInput type="password" formControlName="password">
+            <mat-icon matSuffix>lock</mat-icon>
+          </mat-form-field>
+        </p>
+        <p>
+          <mat-form-field>
+            <mat-label>Répétez le mot de passe</mat-label>
+            <input matInput type="password" formControlName="passwordConfirm">
+            <mat-icon matSuffix>lock</mat-icon>
+          </mat-form-field>
+        </p>
+        <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid">Mettre à jour le mot de passe</button>
+        <p>Mot de passe oublié ? <a routerLink="/reset-password">Cliquez ici</a></p>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>

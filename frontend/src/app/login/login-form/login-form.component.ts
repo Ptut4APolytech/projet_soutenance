@@ -21,6 +21,4 @@ export class LoginFormComponent implements OnInit {
   submit() {
     // TODO
   }
-
-
 }
