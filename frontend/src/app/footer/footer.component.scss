@@ -1,9 +1,12 @@
-.footer {
+#footer {
   position: absolute;
-  padding: 1rem 0;
   bottom: 0;
   width: 100%;
   text-align: center;
   color: white;
   background-color: var(--poly-soutenances-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 7vh;
 }
