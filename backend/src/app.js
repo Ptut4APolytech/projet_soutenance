@@ -7,24 +7,23 @@ dotenv.config();
 const cors = require("cors")
 let corsOptions = { origin: "http://localhost:8081" }
 
-app.use(cors(corsOptions))
-app.use(express.json())
-app.use(express.urlencoded({ extended: true }))
+app.use(cors(corsOptions));
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
-const Sequelize = require("sequelize")
-const sequelizeConfig = new Sequelize(process.env.DB_HOST, process.env.DB_USER, process.env.DB_PASSWORD, {
-    host: process.env.DB_HOST,
-    dialect: "mysql"
-})
-
-const db = {};
-db.Sequelize = Sequelize;
-db.sequelize = sequelizeConfig;
-
-// TODO: add models here
+const db = require("./models");
+// In development, you may need to drop existing tables and re-sync database. Just use force: true as following code:
+// db.sequelize.sync({ force: true }).then(() => {
+//   console.log("Drop and re-sync db.");
+// });
+db.sequelize.sync()
+  .then(() => {
+    console.log("Synced db.");
+  })
+  .catch((err) => {
+    console.log("Failed to sync db: " + err.message);
+  });
 
 module.exports = app
 
-app.get("/", (req, res) => {
-    res.json({ message: "Coucou c'est du JSON" }) // TODO: remove this line
-})
+require("./routes/student.route")(app);
