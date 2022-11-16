@@ -31,6 +31,19 @@ $poly-soutenances-theme: mat.define-light-theme((
     background-color: var(--poly-soutenances-danger);
     color: white;
   }
+
+  .center-vertically {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .center-horizontally {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+  }
 }
 
 html, body { height: 100%; }
