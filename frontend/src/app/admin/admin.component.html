@@ -1,6 +1,6 @@
-<a href="#" class="center-horizontally mt-3 mb-5">
-  <mat-card class="card center-horizontally w-5/6 md:w-2/3">
-    <mat-icon id="add-btn">add_circle_outline</mat-icon>
-  </mat-card>
-</a>
+<div class="text-center my-5">
+  <a mat-raised-button color="primary" href="#">
+    Ajouter un série <mat-icon id="add-btn" matSuffix>add_circle_outline</mat-icon>
+  </a>
+</div>
 <app-admin-overview *ngFor="let serie of getSeries()" [serie]="serie" class="center-horizontally mb-5"></app-admin-overview>
