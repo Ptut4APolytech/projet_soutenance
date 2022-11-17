@@ -1,12 +1,12 @@
-<mat-card class="card">
-  <div class="container">
+<mat-card class="card flex w-5/6 md:w-2/3">
+  <div class="text-center">
     <mat-card-title><b>{{ serie.name }}</b></mat-card-title>
     <h3>du <b>{{ serie.start }}</b> au <b>{{ serie.end }}</b></h3>
     <div class="spacer"></div>
     <p><b>{{ serie.nbApprentices }}</b> apprentis</p>
     <p><b>{{ serie.nbMapsWithConstraints }}</b> MAPs ont remplis leurs contraintes</p>
     <div class="spacer"></div>
-    <ul class="buttons">
+    <ul class="flex justify-center list-none p-0 m-0 space-x-2 flex-col md:flex-row space-y-2 md:space-y-0">
       <li><a mat-raised-button color="primary" href="#">Voir les détails</a></li>
       <li><a mat-raised-button color="success" href="#">Générer le planning</a></li>
       <li><a mat-raised-button color="danger" href="#">Supprimer</a></li>
