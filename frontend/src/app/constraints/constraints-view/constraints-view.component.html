@@ -1,0 +1,30 @@
+<div class="info">
+  <h3>Veuillez cocher les demi-journées durant lesquelles vous êtes disponibles pour assister à la soutenance de votre alternant.</h3>
+  <p>Par défaut, vous serez considéré disponible sur tous les créneaux.</p>
+</div>
+<div class="content">
+  <table class="mat-table mat-elevation-z8">
+    <tr class="mat-row-header">
+      <th></th>
+      <th class="mat-header-cell" *ngFor="let day of days">{{day.fullName}}</th>
+    </tr>
+
+    <tr class="mat-row">
+      <td class="mat-cell">Matin (8h-13h)</td>
+      <td *ngFor="let day of days"><mat-checkbox checked color="primary"></mat-checkbox></td>
+    </tr>
+
+    <tr class="mat-row">
+      <td class="mat-cell">Après-midi (14h-19h)</td>
+      <td *ngFor="let day of days"><mat-checkbox checked color="primary"></mat-checkbox></td>
+    </tr>
+  </table>
+
+  <div class="update">
+    <div class="buttons">
+      <button class="button-base-color" mat-flat-button>Annuler les changements</button>
+      <button mat-flat-button color="primary">Mettre à jour</button>
+    </div>
+    <p>La saisie des contraintes est ouverte jusqu'au {{lastInput}} inclus.</p>
+  </div>
+</div>

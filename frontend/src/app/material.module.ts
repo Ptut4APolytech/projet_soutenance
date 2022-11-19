@@ -39,7 +39,6 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     CommonModule,
     BrowserAnimationsModule,
     MatCheckboxModule,
-    MatCheckboxModule,
     MatButtonModule,
     MatInputModule,
     MatAutocompleteModule,
@@ -70,6 +69,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     MatTableModule,
     MatSortModule,
     MatPaginatorModule,
+    MatMenuModule,
   ],
   exports: [
     MatButtonModule,
@@ -89,6 +89,8 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     MatTableModule,
     MatPaginatorModule,
     MatCardModule,
+    MatMenuModule,
+    MatCheckboxModule,
   ],
   providers: [MatDatepickerModule],
 })
