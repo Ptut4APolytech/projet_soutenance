@@ -3,24 +3,37 @@
     <mat-card-title>Première connexion ?</mat-card-title>
     <h2>Créez un nouveau mot de passe</h2>
     <mat-card-content>
-      <p class="form-desc">Votre mot de passe doit contenir au moins 8 caractères et au moins 3 des types de caractères suivants : minuscule, majuscule, numérique et spécial</p>
+      <p class="form-desc">
+        Votre mot de passe doit contenir au moins 8 caractères et au moins 3 des
+        types de caractères suivants : minuscule, majuscule, numérique et
+        spécial
+      </p>
       <form [formGroup]="form" (ngSubmit)="submit()">
         <p>
           <mat-form-field>
             <mat-label>Nouveau mot de passe</mat-label>
-            <input matInput type="password" formControlName="password">
+            <input matInput type="password" formControlName="password" />
             <mat-icon matSuffix>lock</mat-icon>
           </mat-form-field>
         </p>
         <p>
           <mat-form-field>
             <mat-label>Répétez le mot de passe</mat-label>
-            <input matInput type="password" formControlName="passwordConfirm">
+            <input matInput type="password" formControlName="passwordConfirm" />
             <mat-icon matSuffix>lock</mat-icon>
           </mat-form-field>
         </p>
-        <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid">Mettre à jour le mot de passe</button>
-        <p class="forgotten-pwd">Mot de passe oublié ? <a routerLink="/reset-password">Cliquez ici</a></p>
+        <button
+          mat-raised-button
+          color="primary"
+          type="submit"
+          [disabled]="form.invalid"
+        >
+          Mettre à jour le mot de passe
+        </button>
+        <p class="forgotten-pwd">
+          Mot de passe oublié ? <a routerLink="/reset-password">Cliquez ici</a>
+        </p>
       </form>
     </mat-card-content>
   </mat-card>

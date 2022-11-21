@@ -1,4 +1,4 @@
-@use '@angular/material' as mat;
+@use "@angular/material" as mat;
 @include mat.core();
 
 @tailwind base;
@@ -6,18 +6,30 @@
 @tailwind utilities;
 
 $poly-soutenances-primary: mat.define-palette(mat.$indigo-palette);
-$poly-soutenances-accent: mat.define-palette(mat.$pink-palette, A200, A100, A400);
-$poly-soutenances-success: mat.define-palette(mat.$green-palette, 500, 100, 700);
+$poly-soutenances-accent: mat.define-palette(
+  mat.$pink-palette,
+  A200,
+  A100,
+  A400
+);
+$poly-soutenances-success: mat.define-palette(
+  mat.$green-palette,
+  500,
+  100,
+  700
+);
 $poly-soutenances-danger: mat.define-palette(mat.$red-palette);
 
-$poly-soutenances-theme: mat.define-light-theme((
-  color: (
-    primary: $poly-soutenances-primary,
-    accent: $poly-soutenances-accent,
-    success: $poly-soutenances-success,
-    danger: $poly-soutenances-danger,
+$poly-soutenances-theme: mat.define-light-theme(
+  (
+    color: (
+      primary: $poly-soutenances-primary,
+      accent: $poly-soutenances-accent,
+      success: $poly-soutenances-success,
+      danger: $poly-soutenances-danger,
+    ),
   )
-));
+);
 
 @include mat.all-component-themes($poly-soutenances-theme);
 
@@ -49,5 +61,11 @@ $poly-soutenances-theme: mat.define-light-theme((
   }
 }
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}

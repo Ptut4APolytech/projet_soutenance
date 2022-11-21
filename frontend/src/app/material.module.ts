@@ -34,8 +34,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatSortModule } from '@angular/material/sort';
 import { MatPaginatorModule } from '@angular/material/paginator';
 
-
-@NgModule( {
+@NgModule({
   imports: [
     CommonModule,
     BrowserAnimationsModule,
@@ -70,8 +69,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     MatSnackBarModule,
     MatTableModule,
     MatSortModule,
-    MatPaginatorModule
-
+    MatPaginatorModule,
   ],
   exports: [
     MatButtonModule,
@@ -90,11 +88,8 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     MatTooltipModule,
     MatTableModule,
     MatPaginatorModule,
-    MatCardModule
+    MatCardModule,
   ],
-  providers: [
-    MatDatepickerModule,
-  ]
-} )
-
-export class MaterialModule { }
+  providers: [MatDatepickerModule],
+})
+export class MaterialModule {}

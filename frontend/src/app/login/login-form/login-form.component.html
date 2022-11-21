@@ -1,8 +1,12 @@
-<form [formGroup]="form" (ngSubmit)="submit()" class="flex flex-col items-center">
+<form
+  [formGroup]="form"
+  (ngSubmit)="submit()"
+  class="flex flex-col items-center"
+>
   <p>
     <mat-form-field>
       <mat-label>Identifiant</mat-label>
-      <input type="text" matInput formControlName="username">
+      <input type="text" matInput formControlName="username" />
       <mat-icon matSuffix>person_outline</mat-icon>
     </mat-form-field>
   </p>
@@ -10,12 +14,14 @@
   <p>
     <mat-form-field>
       <mat-label>Mot de passe</mat-label>
-      <input type="password" matInput formControlName="password">
+      <input type="password" matInput formControlName="password" />
       <mat-icon matSuffix>lock</mat-icon>
     </mat-form-field>
   </p>
 
   <button type="submit" mat-raised-button color="primary">Connexion</button>
 
-  <p class="forgotten-pwd">Mot de passe oublié ? <a routerLink="/reset-password">Cliquez ici</a></p>
+  <p class="forgotten-pwd">
+    Mot de passe oublié ? <a routerLink="/reset-password">Cliquez ici</a>
+  </p>
 </form>
