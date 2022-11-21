@@ -29,5 +29,7 @@ module.exports = (sequelize, Sequelize) => {
     as: "tutor",
   });
 
+  Student.removeAttribute("jurorId");
+
   return Student;
 };

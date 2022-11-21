@@ -11,12 +11,17 @@ module.exports = (sequelize, Sequelize) => {
     },
     master: {
       type: Sequelize.BOOLEAN,
+      defaultValue: false,
+      nullable: false,
     },
     infoRelated: {
-      type: Sequelize.STRING,
+      type: Sequelize.BOOLEAN,
+      nullable: true,
     },
     activated: {
       type: Sequelize.BOOLEAN,
+      defaultValue: false,
+      nullable: false,
     },
   });
 
