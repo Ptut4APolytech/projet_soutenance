@@ -9,8 +9,14 @@ module.exports = (sequelize, Sequelize) => {
       email: {
         type: Sequelize.STRING
       },
+      master: {
+        type: Sequelize.BOOLEAN
+      },
       infoRelated: {
         type: Sequelize.STRING
+      },
+      activated: {
+        type: Sequelize.BOOLEAN
       }
     });
 
