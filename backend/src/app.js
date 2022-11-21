@@ -1,11 +1,11 @@
-const express = require("express")
-const app = express()
+const express = require("express");
+const app = express();
 
-const dotenv = require('dotenv');
+const dotenv = require("dotenv");
 dotenv.config();
 
-const cors = require("cors")
-let corsOptions = { origin: "http://localhost:8081" }
+const cors = require("cors");
+let corsOptions = { origin: "http://localhost:8081" };
 
 app.use(cors(corsOptions));
 app.use(express.json());
@@ -16,7 +16,8 @@ const db = require("./models");
 // db.sequelize.sync({ force: true }).then(() => {
 //   console.log("Drop and re-sync db.");
 // });
-db.sequelize.sync()
+db.sequelize
+  .sync()
   .then(() => {
     console.log("Synced db.");
   })
@@ -24,6 +25,6 @@ db.sequelize.sync()
     console.log("Failed to sync db: " + err.message);
   });
 
-module.exports = app
+module.exports = app;
 
 require("./routes/student.route")(app);

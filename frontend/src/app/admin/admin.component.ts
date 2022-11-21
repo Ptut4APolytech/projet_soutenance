@@ -1,17 +1,16 @@
-import {Component, OnInit, Output} from '@angular/core';
+import { Component, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'app-admin',
   templateUrl: './admin.component.html',
-  styleUrls: ['./admin.component.scss']
+  styleUrls: ['./admin.component.scss'],
 })
 export class AdminComponent implements OnInit {
   @Output() series = this.getSeries();
 
-  constructor() { }
+  constructor() {}
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   getSeries() {
     return [
@@ -22,7 +21,8 @@ export class AdminComponent implements OnInit {
         end: '25/08/2024',
         nbApprentices: 26,
         nbMapsWithConstraints: 19,
-      },{
+      },
+      {
         id: 2,
         name: 'INFO 4A APP 2022-2025',
         start: '12/08/2024',
