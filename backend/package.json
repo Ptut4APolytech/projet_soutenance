@@ -7,7 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon src/server-local.js",
     "deployed": "nodemon src/server.js",
-    "pretty": "prettier --check \"src/**/*.js\""
+    "pretty": "prettier --write \"src/**/*.js\"",
+    "pretty-check": "prettier --check \"src/**/*.js\""
   },
   "repository": {
     "type": "git",
