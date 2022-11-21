@@ -63,7 +63,8 @@ exports.findById = (req, res) => {
         res.send(data);
       } else {
         res.status(404).send({
-          message: `Cannot find Studient with id=${id}.`,
+          message: `Cannot find Studient with id=${id}.`
+          ,
         });
       }
     })
