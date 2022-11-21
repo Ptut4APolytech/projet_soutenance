@@ -7,8 +7,8 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "pretty": "prettier --write \"src/**/*.js\"",
-    "pretty-check": "prettier --check \"src/**/*.js\""
+    "pretty": "prettier --write \"src/**/*.ts\"",
+    "pretty-check": "prettier --check \"src/**/*.ts\""
   },
   "private": true,
   "dependencies": {
