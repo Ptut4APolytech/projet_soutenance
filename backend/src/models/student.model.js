@@ -11,6 +11,7 @@ module.exports = (sequelize, Sequelize) => {
     },
     number: {
       type: Sequelize.STRING,
+      unique: true,
     },
   });
 
