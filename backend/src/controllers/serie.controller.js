@@ -2,7 +2,7 @@ const serieService = require("../services/serie.service");
 require("../utils/array.utils");
 
 // Create and Save a new Student
-exports.create = (req, res) => {
+exports.create = async (req, res) => {
   // Validate request
   if (
     !req.body.label ||
@@ -26,7 +26,20 @@ exports.create = (req, res) => {
   };
 
   try {
-    res.send(serieService.create(serie));
+    await serieService.create(serie).then((r) => {
+      let corruptedStudents = r.students.filter(
+        (s) => s.masterId == undefined || s.tutorId == undefined
+      );
+      if (corruptedStudents.length > 0) {
+        res.status(202).send({
+          message:
+            "Les étudiants suivants n'ont pas de MAP ou de tuteur : " +
+            corruptedStudents.map((s) => s.number).join(", "),
+        });
+      } else {
+        res.status(201).send(r);
+      }
+    });
   } catch (err) {
     res.status(500).send({
       message: err.message || "Some error occurred while creating the Student.",

@@ -8,6 +8,7 @@ module.exports = (sequelize, Sequelize) => {
     },
     email: {
       type: Sequelize.STRING,
+      unique: true,
     },
     master: {
       type: Sequelize.BOOLEAN,
