@@ -11,32 +11,54 @@
     "produces": ["application/json"],
     "paths": {
         "/serie": {
-          "post": {
-            "tags": ["Serie"],
-            "summary": "Create a serie of defenses",
-            "parameters": [
-                {
-                    "name": "serie",
-                    "in": "body",
-                    "schema": {
-                        "$ref": "#/definitions/SerieCreation"
-                      },
-                    "required": true
+            "post": {
+                "tags": ["Serie"],
+                "summary": "Create a serie of defenses",
+                "parameters": [
+                    {
+                        "name": "serie",
+                        "in": "body",
+                        "schema": {
+                            "$ref": "#/definitions/SerieCreation"
+                        },
+                        "required": true
+                    }
+                ],
+                "produces": ["application/json"],
+                "responses": {
+                    "201": {
+                        "description": "New serie is created"
+                    },
+                    "202": {
+                        "description": "New serie is created but some studients have no master or no tutor"
+                    },
+                    "400": {
+                        "description": "A field is missing"
+                    },
+                    "500": {
+                        "description": "Serie is not created, an error occured"
+                    }
                 }
-              ],
-              "produces": ["application/json"],
-              "responses": {
-                "200": {
-                  "description": "New serie is created"
-                },
-                "400": {
-                  "description": "A field is missing"
-                },
-                "500": {
-                  "description": "New serie is created"
+            },
+            "get": {
+                "tags": ["Serie"],
+                "summary": "Get all series",
+                "produces": ["application/json"],
+                "responses": {
+                    "200": {
+                        "description": "All series are returned",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/Serie"
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
                 }
-              }
-          }
+            }
         },
         "/serie/{id}": {
             "delete": {
@@ -61,52 +83,36 @@
                 }
             }
         },
-        "/serie": {
-            "get": {
-                "tags": ["Serie"],
-                "summary": "Get all series",
-                "produces": ["application/json"],
-                "responses": {
-                "200": {
-                    "description": "All series are returned",
+        "/constraint": {
+          "post": {
+            "tags": ["Constraint"],
+            "summary": "Create or replace a list of constraints for a juror",
+            "parameters": [
+                {
+                    "name": "constraints",
+                    "in": "body",
                     "schema": {
                         "type": "array",
-                        "items": {
-                            "$ref": "#/definitions/Serie"
-                        }
-                    }
+                            "items": {
+                                "$ref": "#/definitions/ConstraintCreation"
+                            }
+                      },
+                    "required": true
+                }
+              ],
+              "produces": ["application/json"],
+              "responses": {
+                "200": {
+                  "description": "Constraints are created or replaced"
+                },
+                "400": {
+                  "description": "A body is needed or a field is missing in one constraint"
                 },
                 "500": {
-                    "description": "Internal server error"
+                  "description": "Constraints are neither created nor replaced, an error occured"
                 }
-                }
-            },
-            "post": {
-                "tags": ["Serie"],
-                "summary": "Create a serie of defenses",
-                "parameters": [
-                    {
-                        "name": "serie",
-                        "in": "body",
-                        "schema": {
-                            "$ref": "#/definitions/SerieCreation"
-                        },
-                        "required": true
-                    }
-                ],
-                "produces": ["application/json"],
-                "responses": {
-                    "200": {
-                    "description": "New serie is created"
-                    },
-                    "400": {
-                    "description": "A field is missing"
-                    },
-                    "500": {
-                    "description": "New serie is created"
-                    }
-                }
-            }
+              }
+          }
         }
       },
       "definitions": {
@@ -409,6 +415,22 @@
                   }
                 }
               }
+          }
+        },
+        "ConstraintCreation": {
+          "required": ["available", "jurorId", "slotId"],
+          "properties": {
+            "available": {
+              "type": "boolean"
+            },
+            "jurorId": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "slotId": {
+              "type": "integer",
+              "format": "int64"
+            }
           }
         }
       }
