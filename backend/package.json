@@ -29,7 +29,8 @@
     "mongoose": "^6.6.2",
     "mysql2": "^2.3.3",
     "nodemon": "^2.0.20",
-    "sequelize": "^6.23.2"
+    "sequelize": "^6.23.2",
+    "swagger-ui-express": "^4.6.0"
   },
   "devDependencies": {
     "dotenv-cli": "^6.0.0",

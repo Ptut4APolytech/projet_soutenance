@@ -11,6 +11,9 @@ app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+const swaggerUi = require("swagger-ui-express"),
+  swaggerDocument = require("./swagger.json");
+
 const db = require("./models");
 // In development, you may need to drop existing tables and re-sync database. Just use force: true as following code:
 // db.sequelize.sync({ force: true }).then(() => {
@@ -26,5 +29,7 @@ db.sequelize
   });
 
 module.exports = app;
+
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 require("./routes/serie.route")(app);
