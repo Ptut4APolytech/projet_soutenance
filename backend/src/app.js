@@ -27,4 +27,4 @@ db.sequelize
 
 module.exports = app;
 
-require("./routes/student.route")(app);
+require("./routes/serie.route")(app);
