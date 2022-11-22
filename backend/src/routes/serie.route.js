@@ -6,5 +6,7 @@ module.exports = (app) => {
 
   router.get("/", serie.getAll);
 
+  router.delete("/:id", serie.delete);
+
   app.use("/api/serie", router);
 };
