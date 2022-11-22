@@ -4,5 +4,7 @@ module.exports = (app) => {
 
   router.post("/", serie.create);
 
+  router.get("/", serie.getAll);
+
   app.use("/api/serie", router);
 };
