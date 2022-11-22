@@ -1,0 +1,37 @@
+<div class="mat-elevation-z8">
+    <table mat-table [dataSource]="dataSource">
+  
+      <!-- Position Column -->
+      <ng-container matColumnDef="timeSlot">
+        <th mat-header-cell *matHeaderCellDef> Créneau </th>
+        <td mat-cell *matCellDef="let element"> {{element.timeSlot}} </td>
+      </ng-container>
+  
+      <!-- Name Column -->
+      <ng-container matColumnDef="apprentice">
+        <th mat-header-cell *matHeaderCellDef> Apprenti </th>
+        <td mat-cell *matCellDef="let element"> {{element.apprentice}} </td>
+      </ng-container>
+  
+      <!-- Weight Column -->
+      <ng-container matColumnDef="tutor">
+        <th mat-header-cell *matHeaderCellDef> Maître d'apprentissage </th>
+        <td mat-cell *matCellDef="let element"> {{element.tutor}} </td>
+      </ng-container>
+  
+      <!-- Symbol Column -->
+      <ng-container matColumnDef="room">
+        <th mat-header-cell *matHeaderCellDef> Salle </th>
+        <td mat-cell *matCellDef="let element"> {{element.room}} </td>
+      </ng-container>
+  
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+  
+    <mat-paginator [pageSizeOptions]="[5, 10, 20]"
+                   showFirstLastButtons 
+                   aria-label="Select page of periodic elements">
+    </mat-paginator>
+  </div>
+  

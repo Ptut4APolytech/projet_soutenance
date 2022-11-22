@@ -1,0 +1,23 @@
+<div>
+    <button mat-button [matMenuTriggerFor]="menu">EXPORTER</button>
+    <mat-menu #menu="matMenu">
+        <button mat-menu-item>PDF</button>
+        <button mat-menu-item>CSV</button>
+    </mat-menu>
+    <mat-tab-group mat-align-tabs="center" (selectedTabChange)="selectDateTab($event)">
+        <mat-tab *ngFor="let date of dateRange" [label]="date.toLocaleDateString('fr')" ></mat-tab>
+    </mat-tab-group>
+    <mat-accordion>
+        <mat-expansion-panel *ngFor="let j of juryDistinct; let i = index" [expanded]="step === i" (opened)="selectJuryData(j, i)">
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    Jury {{j}}
+                </mat-panel-title>
+                <mat-panel-description>
+                    Cliquer pour découvrir le planning
+                </mat-panel-description>
+            </mat-expansion-panel-header>
+            <app-planning-table [dataSource]="dataSource" [update]="changingTab"></app-planning-table>
+        </mat-expansion-panel>
+    </mat-accordion>
+</div>

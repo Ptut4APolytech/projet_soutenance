@@ -1,0 +1,12 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\frontend",
+    "\\frontend\\src",
+    "\\frontend\\src\\app",
+    "\\frontend\\src\\app\\home-page",
+    "\\frontend\\src\\app\\home-page\\planning-view"
+  ],
+  "SelectedNode": "\\frontend\\src\\app\\home-page\\planning-view\\planning-view.component.ts",
+  "PreviewInSolutionExplorer": false
+}
