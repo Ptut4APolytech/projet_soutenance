@@ -29,9 +29,19 @@ exports.create = (req, res) => {
     res.send(serieService.create(serie));
   } catch (err) {
     res.status(500).send({
-      message:
-        err.message + "-" + err.stack + ":" + err.lineNumber ||
-        "Some error occurred while creating the Student.",
+      message: err.message || "Some error occurred while creating the Student.",
+    });
+  }
+};
+
+exports.getAll = async (req, res) => {
+  try {
+    await serieService.getAll().then((r) => {
+      res.send(r);
+    });
+  } catch (err) {
+    res.status(500).send({
+      message: err.message || "Some error occurred while retrieving series.",
     });
   }
 };

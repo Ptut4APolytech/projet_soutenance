@@ -44,3 +44,53 @@ exports.create = (serie) => {
       throw err;
     });
 };
+
+exports.getAll = async () => {
+  let series = await db.series
+    .findAll({
+      include: [
+        {
+          model: db.slots,
+          as: "slots",
+        },
+        {
+          model: db.rooms,
+          as: "rooms",
+        },
+        {
+          model: db.jurors,
+          as: "jurors",
+          include: [
+            {
+              model: db.constraints,
+              as: "constraints",
+            },
+          ],
+        },
+        {
+          model: db.students,
+          as: "students",
+        },
+      ],
+    })
+    .then((res) => {
+      return res;
+    });
+
+  series.forEach((serie) => {
+    serie.dataValues.startDate = new Date(
+      Math.min.apply(
+        null,
+        serie.slots.map((s) => s.start)
+      )
+    ).toLocaleDateString("fr");
+    serie.dataValues.endDate = new Date(
+      Math.max.apply(
+        null,
+        serie.slots.map((s) => s.end)
+      )
+    ).toLocaleDateString("fr");
+  });
+
+  return series;
+};
