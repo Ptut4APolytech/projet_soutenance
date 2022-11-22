@@ -94,3 +94,11 @@ exports.getAll = async () => {
 
   return series;
 };
+
+exports.delete = async (id) => {
+  await db.series.destroy({
+    where: {
+      id: id,
+    },
+  });
+};

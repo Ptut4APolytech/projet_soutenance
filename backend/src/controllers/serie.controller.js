@@ -45,3 +45,15 @@ exports.getAll = async (req, res) => {
     });
   }
 };
+
+exports.delete = async (req, res) => {
+  try {
+    await serieService.delete(req.params.id).then((r) => {
+      res.send(r);
+    });
+  } catch (err) {
+    res.status(500).send({
+      message: err.message || "Some error occurred while deleting series.",
+    });
+  }
+};

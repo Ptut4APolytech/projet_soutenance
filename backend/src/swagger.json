@@ -38,6 +38,29 @@
               }
           }
         },
+        "/serie/{id}": {
+            "delete": {
+                "tags": ["Serie"],
+                "summary": "Delete a serie of defenses",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "type": "integer",
+                        "required": true
+                    }
+                ],
+                "produces": ["application/json"],
+                "responses": {
+                    "200": {
+                    "description": "Serie is deleted"
+                    },
+                    "500": {
+                    "description": "Serie is not deleted, an error occured"
+                    }
+                }
+            }
+        },
         "/serie": {
             "get": {
                 "tags": ["Serie"],
