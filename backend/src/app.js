@@ -33,3 +33,4 @@ module.exports = app;
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 require("./routes/serie.route")(app);
+require("./routes/constraint.route")(app);

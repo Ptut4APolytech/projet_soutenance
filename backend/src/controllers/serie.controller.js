@@ -1,7 +1,6 @@
 const serieService = require("../services/serie.service");
 require("../utils/array.utils");
 
-// Create and Save a new Student
 exports.create = async (req, res) => {
   // Validate request
   if (
