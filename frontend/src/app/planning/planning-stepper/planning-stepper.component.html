@@ -1,0 +1,60 @@
+<mat-stepper class="lg:px-48 md:px-30 sm: px-8" #stepper labelPosition="end">
+  <mat-step [stepControl]="generalInformations">
+    <div class="text-xl pb-6">Informations générales</div>
+    <form [formGroup]="generalInformations">
+      <ng-template matStepLabel>Informations générales</ng-template>
+      <mat-form-field class="lg:w-8/12 md:w-3/4 w-full text-lg">
+        <input matInput placeholder="Nom de la promo" formControlName=generalInformationsCtrl required>
+        <mat-hint>Ce nom servira de libellé à la série de soutenance. Exemple: "INFO 5A APP 2021-2024"</mat-hint>
+      </mat-form-field>
+    </form>
+    <div class="mt-10">
+      <button class="lg:text-lg" mat-raised-button color="primary" matStepperNext>CONTINUER</button>
+    </div>
+  </mat-step>
+  <mat-step [stepControl]="timeSchedule" label="Calendrier">
+    <div class="text-xl pb-6">Calendrier</div>
+    <form>
+      <div class="text-lg">Choisir une période de soutenance :</div>
+
+      <mat-form-field class="lg:w-8/12 md:w-3/4 w-full text-lg">
+        <mat-label>Date de la série</mat-label>
+        <mat-date-range-input [rangePicker]="datePicker">
+          <input matStartDate placeholder="Date de début">
+          <input matEndDate placeholder="Date de fin">
+        </mat-date-range-input>
+        <mat-datepicker-toggle matSuffix [for]="datePicker"></mat-datepicker-toggle>
+        <mat-date-range-picker #datePicker></mat-date-range-picker>
+      </mat-form-field>
+
+      <div class="text-lg pt-8">Choix des périodes de soutenance</div>
+      <mat-form-field class="lg:w-1/3">
+        <mat-label>Heure de début</mat-label>
+        <input type="time" matInput name="startTimePeriodInput" [(ngModel)]="startTimePeriod">
+        <mat-hint>HH-mm</mat-hint>
+        <mat-datepicker #startTimePicker></mat-datepicker>
+      </mat-form-field>
+
+      <mat-form-field class="lg:w-1/3">
+        <mat-label>Heure de fin</mat-label>
+        <input type="time" matInput name="endTimePeriodInput" [(ngModel)]="endTimePeriod">
+        <mat-hint>HH-mm</mat-hint>
+        <mat-datepicker #endTimePicker></mat-datepicker>
+      </mat-form-field>
+      <button class="text-lg" mat-button role="button" color="primary" (click)="addChip()">Ajouter</button>
+      <br>
+      <div class="text-lg pt-8"></div>
+
+      <mat-form-field class="lg:w-8/12 md:w-3/4 w-full text-lg">
+        <mat-label>Périodes choisies</mat-label>
+        <mat-chip-list *ngFor="let chip of chipList">
+          {{chip}}
+        </mat-chip-list>
+      </mat-form-field>
+    </form>
+    <div>
+      <button mat-raised-button color="primary" matStepperNext>CONTINUER</button>
+      <button mat-button matStepperPrevious>RETOUR</button>
+    </div>
+  </mat-step>
+</mat-stepper>

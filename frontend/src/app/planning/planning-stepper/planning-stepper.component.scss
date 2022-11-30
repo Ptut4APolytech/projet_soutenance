@@ -1,0 +1,29 @@
+.planning-stepper {
+  padding: 0 10vw;
+}
+
+.field-input {
+  width: 50%;
+}
+
+.field-header-text {
+  font-size: large;
+  font-weight: 500;
+}
+
+.button-filename-group {
+  button {
+    margin-left: 5vw;
+  }
+
+  span {
+    margin-left: 5vw;
+    font-size: 20px;
+    font-weight: 500;
+  }
+
+  mat-error {
+    margin-top: 1vw;
+  }
+
+}
