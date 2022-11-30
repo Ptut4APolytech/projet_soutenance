@@ -1,4 +1,5 @@
 const serieService = require("../services/serie.service");
+const plannigService = require("../services/planning.service");
 require("../utils/array.utils");
 
 exports.create = async (req, res) => {
@@ -66,6 +67,18 @@ exports.delete = async (req, res) => {
   } catch (err) {
     res.status(500).send({
       message: err.message || "Some error occurred while deleting series.",
+    });
+  }
+};
+
+exports.buildPlanning = async (req, res) => {
+  try {
+    await plannigService.build().then((r) => {
+      res.send(r);
+    });
+  } catch (err) {
+    res.status(500).send({
+      message: err.message || "Some error occurred while building the planning. ",
     });
   }
 };
