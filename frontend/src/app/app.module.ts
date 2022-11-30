@@ -15,7 +15,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { LoginFirstComponent } from './login/login-first/login-first.component';
 import { AdminOverviewComponent } from './admin/admin-overview/admin-overview.component';
 import { AdminComponent } from './admin/admin.component';
-import {HttpClientModule} from "@angular/common/http";
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
