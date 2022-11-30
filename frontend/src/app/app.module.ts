@@ -20,6 +20,8 @@ import { HomepageViewComponent } from './home-page/home-page-view/home-page-view
 import { NoPlanningComponent } from './home-page/no-planning/no-planning.component';
 import { PlanningViewComponent } from './home-page/planning-view/planning-view.component';
 import { PlanningTableComponent } from './home-page/planning-table/planning-table.component';
+import {MatTabsModule} from "@angular/material/tabs";
+import {MatExpansionModule} from "@angular/material/expansion";
 
 @NgModule({
   declarations: [
@@ -46,6 +48,8 @@ import { PlanningTableComponent } from './home-page/planning-table/planning-tabl
     ReactiveFormsModule,
     MatMenuModule,
     HttpClientModule,
+    MatTabsModule,
+    MatExpansionModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
