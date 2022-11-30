@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 
 @Component({
   selector: 'app-admin-overview',
@@ -7,8 +7,13 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class AdminOverviewComponent implements OnInit {
   @Input() serie: any;
+  @Output() deleteSerie = new EventEmitter<number>();
 
   constructor() {}
+
+  onDeleteClick() {
+    this.deleteSerie.emit(this.serie.id);
+  }
 
   ngOnInit(): void {}
 }

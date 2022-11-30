@@ -5,7 +5,8 @@
   </a>
 </div>
 <app-admin-overview
-  *ngFor="let serie of getSeries()"
+  *ngFor="let serie of series"
   [serie]="serie"
   class="center-horizontally mb-5"
+  (deleteSerie)="onDeleteSerie($event)"
 ></app-admin-overview>

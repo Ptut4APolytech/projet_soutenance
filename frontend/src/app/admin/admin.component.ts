@@ -1,4 +1,5 @@
-import { Component, OnInit, Output } from '@angular/core';
+import {Component, Input, OnInit, Output} from '@angular/core';
+import {AppService} from "../app.service";
 
 @Component({
   selector: 'app-admin',
@@ -6,30 +7,19 @@ import { Component, OnInit, Output } from '@angular/core';
   styleUrls: ['./admin.component.scss'],
 })
 export class AdminComponent implements OnInit {
-  @Output() series = this.getSeries();
+  series: any = [];
 
-  constructor() {}
+  constructor(private appService: AppService) {
+    this.appService.getSeries().subscribe((data: any) => {
+      this.series = data;
+    });
+  }
+
+  onDeleteSerie(id: number) {
+    this.appService.deleteSerie(id).subscribe(() => {
+      this.series = this.series.filter((serie: any) => serie.id !== id);
+    });
+  }
 
   ngOnInit(): void {}
-
-  getSeries() {
-    return [
-      {
-        id: 1,
-        name: 'INFO 5A APP 2021-2024',
-        start: '21/08/2024',
-        end: '25/08/2024',
-        nbApprentices: 26,
-        nbMapsWithConstraints: 19,
-      },
-      {
-        id: 2,
-        name: 'INFO 4A APP 2022-2025',
-        start: '12/08/2024',
-        end: '13/08/2024',
-        nbApprentices: 15,
-        nbMapsWithConstraints: 7,
-      },
-    ];
-  }
 }
