@@ -4,12 +4,14 @@ import { LoginViewComponent } from './login/login-view/login-view.component';
 import { ResetPasswordViewComponent } from './login/reset-password-view/reset-password-view.component';
 import { LoginFirstComponent } from './login/login-first/login-first.component';
 import { AdminComponent } from './admin/admin.component';
+import { ConstraintsViewComponent } from './constraints/constraints-view/constraints-view.component';
 
 const routes: Routes = [
   { path: '', component: LoginViewComponent },
   { path: 'first-login', component: LoginFirstComponent },
   { path: 'reset-password', component: ResetPasswordViewComponent },
   { path: 'admin', component: AdminComponent },
+  { path: 'constraints', component: ConstraintsViewComponent },
 ];
 
 @NgModule({
