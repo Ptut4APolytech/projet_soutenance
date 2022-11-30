@@ -1,0 +1,12 @@
+<div class="text-center my-5">
+  <a mat-raised-button color="primary" href="#">
+    Ajouter un série
+    <mat-icon id="add-btn" matSuffix>add_circle_outline</mat-icon>
+  </a>
+</div>
+<app-admin-overview
+  *ngFor="let serie of series"
+  [serie]="serie"
+  class="center-horizontally mb-5"
+  (deleteSerie)="onDeleteSerie($event)"
+></app-admin-overview>

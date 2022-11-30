@@ -1,6 +1,6 @@
 # Projet soutenance
 ## Back-end
-Se placer dans le dossier back-end : `cd back-end`\
+Se placer dans le dossier back-end : `cd backend`\
 Lancer Express en local : `npm start`\
 Lancer Express en production : `npm run deployed`
 
@@ -11,4 +11,6 @@ Lancer les migrations en test : `npx dotenv -e .env.test sequelize db:migrate`\
 Lancer les migrations en prod : `npx dotenv -e .env sequelize db:migrate`
 
 ## Front-end
-_TODO_
+Se placer dans le dossier back-end : `cd frontend`\
+Lancer Angular : `ng serve`\
+Lancer le watcher d'assets (JS, SCSS) : `ng build --watch`

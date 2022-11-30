@@ -1,39 +1,31 @@
-'use strict';
-
-const fs = require('fs');
-const path = require('path');
-const Sequelize = require('sequelize');
-const process = require('process');
-const basename = path.basename(__filename);
-const env = process.env.NODE_ENV || 'development';
-const config = require(__dirname + '/../config/db.config.js');
-const db = {};
-const dbConfig = require("../config/db.config.js");
-
-let sequelize;
-if (config.use_env_variable) {
-  sequelize = new Sequelize(process.env[config.use_env_variable], config);
-} else {
-  sequelize = new Sequelize(config.database, config.username, config.password, config);
-}
-
-fs
-  .readdirSync(__dirname)
-  .filter(file => {
-    return (file.indexOf('.') !== 0) && (file !== basename) && (file.slice(-3) === '.js');
-  })
-  .forEach(file => {
-    const model = require(path.join(__dirname, file))(sequelize, Sequelize.DataTypes);
-    db[model.name] = model;
-  });
-
-Object.keys(db).forEach(modelName => {
-  if (db[modelName].associate) {
-    db[modelName].associate(db);
+const Sequelize = require("sequelize");
+const sequelize = new Sequelize(
+  process.env.DB_NAME,
+  process.env.DB_USER,
+  process.env.DB_PASSWORD,
+  {
+    host: process.env.DB_HOST,
+    dialect: "mysql",
+    logging: false,
   }
-});
+);
 
-db.sequelize = sequelize;
+const db = {};
 db.Sequelize = Sequelize;
+db.sequelize = sequelize;
+
+db.series = require("./serie.model.js")(sequelize, Sequelize);
+db.jurors = require("./juror.model.js")(sequelize, Sequelize);
+db.students = require("./student.model.js")(sequelize, Sequelize);
+db.rooms = require("./room.model.js")(sequelize, Sequelize);
+db.slots = require("./slot.model.js")(sequelize, Sequelize);
+db.constraints = require("./constraint.model.js")(sequelize, Sequelize);
+db.juries = require("./jury.model.js")(sequelize, Sequelize);
+db.defenses = require("./defense.model.js")(sequelize, Sequelize);
 
 module.exports = db;
+// to use the models, import the db object and use it like this:
+// const db = require("../models");
+// db.series.findAll().then(series => {
+//     console.log(series);
+// });

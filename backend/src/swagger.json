@@ -1,0 +1,438 @@
+{
+    "swagger": "2.0",
+    "info": {
+      "version": "0.1.0",
+      "title": "PolySoutenance API"
+    },
+    "host": "localhost:4000",
+    "basePath": "/",
+    "schemes": ["http"],
+    "consumes": ["application/json"],
+    "produces": ["application/json"],
+    "paths": {
+        "/serie": {
+            "post": {
+                "tags": ["Serie"],
+                "summary": "Create a serie of defenses",
+                "parameters": [
+                    {
+                        "name": "serie",
+                        "in": "body",
+                        "schema": {
+                            "$ref": "#/definitions/SerieCreation"
+                        },
+                        "required": true
+                    }
+                ],
+                "produces": ["application/json"],
+                "responses": {
+                    "201": {
+                        "description": "New serie is created"
+                    },
+                    "202": {
+                        "description": "New serie is created but some studients have no master or no tutor"
+                    },
+                    "400": {
+                        "description": "A field is missing"
+                    },
+                    "500": {
+                        "description": "Serie is not created, an error occured"
+                    }
+                }
+            },
+            "get": {
+                "tags": ["Serie"],
+                "summary": "Get all series",
+                "produces": ["application/json"],
+                "responses": {
+                    "200": {
+                        "description": "All series are returned",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/Serie"
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        },
+        "/serie/{id}": {
+            "delete": {
+                "tags": ["Serie"],
+                "summary": "Delete a serie of defenses",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "type": "integer",
+                        "required": true
+                    }
+                ],
+                "produces": ["application/json"],
+                "responses": {
+                    "200": {
+                    "description": "Serie is deleted"
+                    },
+                    "500": {
+                    "description": "Serie is not deleted, an error occured"
+                    }
+                }
+            }
+        },
+        "/constraint": {
+          "post": {
+            "tags": ["Constraint"],
+            "summary": "Create or replace a list of constraints for a juror",
+            "parameters": [
+                {
+                    "name": "constraints",
+                    "in": "body",
+                    "schema": {
+                        "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/ConstraintCreation"
+                            }
+                      },
+                    "required": true
+                }
+              ],
+              "produces": ["application/json"],
+              "responses": {
+                "200": {
+                  "description": "Constraints are created or replaced"
+                },
+                "400": {
+                  "description": "A body is needed or a field is missing in one constraint"
+                },
+                "500": {
+                  "description": "Constraints are neither created nor replaced, an error occured"
+                }
+              }
+          }
+        }
+      },
+      "definitions": {
+        "Serie": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "label": {
+              "type": "string"
+            },
+            "createdAt": {
+              "type": "string",
+              "format": "datetime"
+            },
+            "updatedAt": {
+              "type": "string",
+              "format": "datetime"
+            },
+            "start": {
+              "type": "string",
+              "format": "date"
+            },
+            "end": {
+              "type": "string",
+              "format": "date"
+            },
+            "slots": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Slot"
+              }
+            },
+            "rooms": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Room"
+              }
+            },
+            "jurors": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Juror"
+              }
+            },
+            "students": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Student"
+              }
+            }
+          }
+        },
+        "Slot": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "label": {
+              "type": "string"
+            },
+            "createdAt": {
+              "type": "string",
+              "format": "datetime"
+            },
+            "updatedAt": {
+              "type": "string",
+              "format": "datetime"
+            },
+            "start": {
+              "type": "string",
+              "format": "datetime"
+            },
+            "end": {
+              "type": "string",
+              "format": "datetime"
+            },
+            "serieId": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        },
+        "Room": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "number": {
+              "type": "string"
+            },
+            "createdAt": {
+              "type": "string",
+              "format": "datetime"
+            },
+            "updatedAt": {
+              "type": "string",
+              "format": "datetime"
+            },
+            "serieId": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        },
+        "Juror": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "firstName": {
+              "type": "string"
+            },
+            "lastName": {
+              "type": "string"
+            },
+            "email": {
+              "type": "string"
+            },
+            "master": {
+              "type": "boolean"
+            },
+            "infoRelated": {
+              "type": "boolean"
+            },
+            "activated": {
+              "type": "boolean"
+            },
+            "createdAt": {
+              "type": "string",
+              "format": "datetime"
+            },
+            "updatedAt": {
+              "type": "string",
+              "format": "datetime"
+            },
+            "serieId": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "constraints": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Constraint"
+              }
+            }
+          }
+        },
+        "Student": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "firstName": {
+              "type": "string"
+            },
+            "lastName": {
+              "type": "string"
+            },
+            "email": {
+              "type": "string"
+            },
+            "number": {
+              "type": "string"
+            },
+            "createdAt": {
+              "type": "string",
+              "format": "datetime"
+            },
+            "updatedAt": {
+              "type": "string",
+              "format": "datetime"
+            },
+            "serieId": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "masterId": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "tutorId": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        },
+        "Constraint": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "available": {
+              "type": "boolean"
+            },
+            "createdAt": {
+              "type": "string",
+              "format": "datetime"
+            },
+            "updatedAt": {
+              "type": "string",
+              "format": "datetime"
+            },
+            "jurorId": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "slotId": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        },
+        "SerieCreation": {
+          "required": ["label", "slots", "jurors", "students", "rooms"],
+          "properties": {
+            "label": {
+              "type": "string"
+            },
+            "slots": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "start": {
+                    "type": "datetime"
+                  },
+                  "end": {
+                    "type": "datetime"
+                  }
+                }
+              }
+            },
+            "rooms": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "number": {
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            "jurors": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "firstName": {
+                      "type": "string"
+                    },
+                    "lastName": {
+                      "type": "string"
+                    },
+                    "email": {
+                      "type": "string"
+                    },
+                    "master": {
+                      "type": "boolean"
+                    },
+                    "infoRelated": {
+                      "type": "boolean"
+                    },
+                    "studentNumber": {
+                      "type": "string"
+                    }
+                  }
+                }
+              },
+              "students": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "firstName": {
+                      "type": "string"
+                    },
+                    "lastName": {
+                      "type": "string"
+                    },
+                    "email": {
+                      "type": "string"
+                    },
+                    "number": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+          }
+        },
+        "ConstraintCreation": {
+          "required": ["available", "jurorId", "slotId"],
+          "properties": {
+            "available": {
+              "type": "boolean"
+            },
+            "jurorId": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "slotId": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        }
+      }
+}
+  

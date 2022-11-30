@@ -1,26 +1,27 @@
-<form [formGroup]="form" (ngSubmit)="submit()">
+<form
+  [formGroup]="form"
+  (ngSubmit)="submit()"
+  class="flex flex-col items-center"
+>
   <p>
-    <mat-form-field appearance="fill">
-      <input type="text" matInput placeholder="Identifiant" formControlName="username">
+    <mat-form-field>
+      <mat-label>Identifiant</mat-label>
+      <input type="text" matInput formControlName="username" />
+      <mat-icon matSuffix>person_outline</mat-icon>
     </mat-form-field>
   </p>
 
   <p>
-    <mat-form-field appearance="fill">
-      <input type="password" matInput placeholder="Mot de passe" formControlName="password">
+    <mat-form-field>
+      <mat-label>Mot de passe</mat-label>
+      <input type="password" matInput formControlName="password" />
+      <mat-icon matSuffix>lock</mat-icon>
     </mat-form-field>
   </p>
 
-  <!--<p *ngIf="error" class="error">
-    {{ error }}
-  </p>-->
+  <button type="submit" mat-raised-button color="primary">Connexion</button>
 
-  <div class="button">
-    <button type="submit" mat-button>Connexion</button>
-  </div>
-
-  <div class="forgotPassword">
-    <p>Mot de passe oublié ?</p>
-    <a href="">Cliquez ici</a>
-  </div>
+  <p class="forgotten-pwd">
+    Mot de passe oublié ? <a routerLink="/reset-password">Cliquez ici</a>
+  </p>
 </form>
