@@ -1,0 +1,13 @@
+version: "3.9"
+services:
+  mysql:
+    build: backend/db
+    volumes:
+      - ./mysql-data:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=polysoutenance
+  api:
+    build: backend/api
+    ports:
+      - "4000:4000"
