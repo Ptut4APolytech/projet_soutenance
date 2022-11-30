@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -17,6 +16,10 @@ import { AdminOverviewComponent } from './admin/admin-overview/admin-overview.co
 import { AdminComponent } from './admin/admin.component';
 import { ConstraintsViewComponent } from './constraints/constraints-view/constraints-view.component';
 import { HttpClientModule } from '@angular/common/http';
+import { HomepageViewComponent } from './home-page/home-page-view/home-page-view.component';
+import { NoPlanningComponent } from './home-page/no-planning/no-planning.component';
+import { PlanningViewComponent } from './home-page/planning-view/planning-view.component';
+import { PlanningTableComponent } from './home-page/planning-table/planning-table.component';
 
 @NgModule({
   declarations: [
@@ -30,6 +33,10 @@ import { HttpClientModule } from '@angular/common/http';
     AdminComponent,
     AdminOverviewComponent,
     ConstraintsViewComponent,
+    HomepageViewComponent,
+    NoPlanningComponent,
+    PlanningViewComponent,
+    PlanningTableComponent,
   ],
   imports: [
     BrowserModule,
