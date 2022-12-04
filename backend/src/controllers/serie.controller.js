@@ -59,6 +59,18 @@ exports.getAll = async (req, res) => {
   }
 };
 
+exports.getOne = async (req, res) => {
+  try {
+    await serieService.getOne(req.params.id).then((r) => {
+      res.send(r);
+    });
+  } catch (err) {
+    res.status(500).send({
+      message: err.message || "Some error occurred while retrieving the serie.",
+    });
+  }
+};
+
 exports.delete = async (req, res) => {
   try {
     await serieService.delete(req.params.id).then((r) => {
@@ -73,7 +85,7 @@ exports.delete = async (req, res) => {
 
 exports.buildPlanning = async (req, res) => {
   try {
-    await plannigService.build().then((r) => {
+    await plannigService.build(req.params.id).then((r) => {
       res.send(r);
     });
   } catch (err) {

@@ -95,6 +95,57 @@ exports.getAll = async () => {
   return series;
 };
 
+exports.getOne = async (id) => {
+  let serie = await db.series
+    .findAll({
+      where: { id: id },
+      include: [
+        {
+          model: db.slots,
+          as: "slots",
+        },
+        {
+          model: db.rooms,
+          as: "rooms",
+        },
+        {
+          model: db.jurors,
+          as: "jurors",
+          include: [
+            {
+              model: db.constraints,
+              as: "constraints",
+            },
+          ],
+        },
+        {
+          model: db.students,
+          as: "students",
+        },
+      ],
+    })
+    .then((res) => {
+
+    res = res[0];
+    
+    res.dataValues.startDate = new Date(
+      Math.min.apply(
+        null,
+        res.slots.map((s) => s.start)
+      )
+    ).toLocaleDateString("fr");
+    res.dataValues.endDate = new Date(
+      Math.max.apply(
+        null,
+        res.slots.map((s) => s.end)
+      )
+    ).toLocaleDateString("fr");
+      return res;
+    });
+
+  return serie;
+};
+
 exports.delete = async (id) => {
   await db.series.destroy({
     where: {

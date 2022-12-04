@@ -6,7 +6,9 @@ module.exports = (app) => {
 
   router.get("/", serie.getAll);
 
-  router.get("/buildPlanning", serie.getAll);
+  router.get("/:id", serie.getOne);
+
+  router.get("/:id/buildPlanning", serie.buildPlanning);
 
   router.delete("/:id", serie.delete);
 
