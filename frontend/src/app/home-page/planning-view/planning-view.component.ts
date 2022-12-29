@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
-import { MatTabChangeEvent } from '@angular/material/tabs';
+import { MatTabChangeEvent, MatTabHeader } from '@angular/material/tabs';
 import { Subject } from 'rxjs';
 
 @Component({
@@ -17,6 +17,11 @@ export class PlanningViewComponent implements OnInit {
   juryDistinct: Number[] = [];
   step: Number = -1;
   changingTab: Subject<boolean> = new Subject();
+  tabIndex: number = 0;
+
+  @ViewChild('tabGroup') tabGroup: any;
+  @ViewChild('goRightButton') goRightButton: any;
+  @ViewChild('goLeftButton') goLeftButton: any;
 
   constructor() {}
 
@@ -39,6 +44,7 @@ export class PlanningViewComponent implements OnInit {
     let dateParts = event.tab.textLabel.split('/');
     var dateObject = new Date(+dateParts[2], +dateParts[1] - 1, +dateParts[0]);
     this.selectedDate = new Date(dateObject);
+    this.tabIndex = this.tabGroup.selectedIndex;
     this.step = -1;
   }
 
@@ -49,6 +55,28 @@ export class PlanningViewComponent implements OnInit {
     );
     this.step = index;
     this.changingTab.next(true);
+  }
+
+  goRight() {
+    this.tabIndex++;
+    if (this.tabIndex == this.dateRange.length - 1) {
+      this.goRightButton._disabled = true;
+    } else {
+      this.goLeftButton._disabled = false;
+    }
+    this.tabGroup.selectedIndex = this.tabIndex;
+    this.selectedDate = this.dateRange[this.tabIndex];
+  }
+
+  goLeft() {
+    this.tabIndex--;
+    if (this.tabIndex == 0) {
+      this.goLeftButton._disabled = true;
+    } else {
+      this.goRightButton._disabled = false;
+    }
+    this.tabGroup.selectedIndex = this.tabIndex;
+    this.selectedDate = this.dateRange[this.tabIndex];
   }
 }
 
@@ -71,7 +99,7 @@ const ELEMENT_DATA: SoutenanceJury[] = [
     jury: 1,
   },
   {
-    date: new Date(1916, 4, 23),
+    date: new Date(1917, 4, 23),
     timeSlot: '8h - 8h30',
     apprentice: 'Leo TOTON',
     tutor: 'Aluminum',
@@ -79,7 +107,7 @@ const ELEMENT_DATA: SoutenanceJury[] = [
     jury: 1,
   },
   {
-    date: new Date(1916, 4, 23),
+    date: new Date(1919, 4, 23),
     timeSlot: '8h - 8h30',
     apprentice: 'Celestin DEAL',
     tutor: 'Aluminum',
@@ -87,15 +115,15 @@ const ELEMENT_DATA: SoutenanceJury[] = [
     jury: 2,
   },
   {
-    date: new Date(1916, 4, 23),
+    date: new Date(1912, 4, 23),
     timeSlot: '8h - 8h30',
     apprentice: 'Julien ROBIN',
     tutor: 'Aluminum',
     room: 19,
-    jury: 2,
+    jury: 4,
   },
   {
-    date: new Date(1916, 4, 23),
+    date: new Date(1912, 2, 23),
     timeSlot: '8h - 8h30',
     apprentice: 'Pauline FRANQUELIN',
     tutor: 'Aluminum',
@@ -103,7 +131,7 @@ const ELEMENT_DATA: SoutenanceJury[] = [
     jury: 2,
   },
   {
-    date: new Date(1916, 4, 23),
+    date: new Date(1916, 6, 23),
     timeSlot: '8h - 8h30',
     apprentice: 'Robin LUSSON',
     tutor: 'Aluminum',
@@ -127,7 +155,7 @@ const ELEMENT_DATA: SoutenanceJury[] = [
     jury: 3,
   },
   {
-    date: new Date(1924, 5, 28),
+    date: new Date(1924, 5, 25),
     timeSlot: '8h - 8h30',
     apprentice: 'Lilian LABROSSE',
     tutor: 'Aluminum',
