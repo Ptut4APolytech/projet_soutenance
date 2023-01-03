@@ -17,6 +17,8 @@ exports.build = async (id) => {
     let rooms = serie.rooms;
     let slots = serie.slots;
 
+    return await orderJury(id, students);
+
     return students;
   };
 
@@ -55,8 +57,61 @@ exports.checkSlots = () => {
   /* erreur si false (plus tard) */
 }
 
-exports.orderJury = () => {
-  return [];
+async function orderJury(id, students) {
+  let coeff_juries = [];
+  // get data
+  let juries = await db.juries          // TODO: create and move this rq tp jury service [ FROM HERE ...
+    .findAll({
+      where: { serieId: id },
+      include: [
+        {
+          model: db.jurors,
+          as: "master",
+          include: [
+            {
+              model: db.constraints,
+              as: "constraints",
+            },
+          ],
+        },
+        {
+          model: db.jurors,
+          as: "teacher1",
+          include: [
+            {
+              model: db.constraints,
+              as: "constraints",
+            },
+          ],
+        },
+        {
+          model: db.jurors,
+          as: "teacher2",
+          include: [
+            {
+              model: db.constraints,
+              as: "constraints",
+            },
+          ],
+        },
+      ],
+      //                                                      ... TO HERE ]
+    }).then((res) => {
+      // calculates coeffs
+      let juries = res;
+      juries.forEach(jury => {
+        //let coeff_map = students.findAll({where: {masterId: jury.masterId}}).length;
+        let coeff_map = 0;
+        coeff_juries.push({
+          idJury: jury.id,
+          coeff_map: coeff_map
+        })
+      });
+      return res;
+    });
+    // ordey by coef
+    console.log(coeff_juries);
+  return juries;
   /* retourne un tableau de liste d'id des jury triés (jury avec les MAP qui s'occupent de beaucoup d'étudiant en premier...)*/
 }
 
