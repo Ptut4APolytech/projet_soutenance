@@ -3,7 +3,7 @@ const db = require("../models");
 const studentService = require("../services/student.service");
 const slotService = require("../services/slot.service");
 const jurorService = require("../services/juror.service");
-//const juriesService = require("../services/juries.service");
+const juryService = require("../services/jury.service");
 const roomService = require("../services/room.service");
 
 const serieService = require("../services/serie.service");
@@ -16,6 +16,7 @@ exports.build = async (id) => {
     let jurors = serie.jurors;
     let rooms = serie.rooms;
     let slots = serie.slots;
+    let juries = juryService.getAll(id);
 
     return students;
   };
