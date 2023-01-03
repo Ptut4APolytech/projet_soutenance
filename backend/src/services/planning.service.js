@@ -5,6 +5,7 @@ const slotService = require("../services/slot.service");
 const jurorService = require("../services/juror.service");
 //const juriesService = require("../services/juries.service");
 const roomService = require("../services/room.service");
+const constraintsService = require("../services/constraint.service");
 
 const serieService = require("../services/serie.service");
 
@@ -17,6 +18,7 @@ exports.build = async (id) => {
     let rooms = serie.rooms;
     let slots = serie.slots;
 
+    return checkJurorSlot(1, 1);
     return students;
   };
 
@@ -38,9 +40,16 @@ exports.checkJury = () => {
   */
 }
 
-exports.checkJurorSlot = (idJuror, idSlot) => {
-  return true;
+async function checkJurorSlot  (idJuror, idSlot) {
   /* return true si juré disponnible sur ce créenau horaire, false sinon */
+
+  let constraintsJurorSlot = await constraintsService.checkJurorSlot(idJuror, idSlot);
+  if (constraintsJurorSlot.length != 1) { // si on as plusieur contrainte sur un juré pour un slot, on devrais déclancher une erreur
+    console.log("Erreur sur la recherche de constraint d'un Juror, idJuror : "+ idJuror +", idSlot : " + idSlot +"    Nombre de contrainte trouvée : " + constraintsJurorSlot.length);
+    return false;
+  }
+  return constraintsJurorSlot[0].available;   
+  
 }
 
 exports.dispoJury = (idJury) => {

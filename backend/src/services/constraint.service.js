@@ -13,3 +13,13 @@ exports.createOrUpdateMany = async (constraints) => {
       });
   }
 };
+
+exports.checkJurorSlot = async (idJuror, idSlot) => {
+  try {
+    return await db.constraints.findAll({ where: { jurorId : idJuror , slotId : idSlot }});
+  } catch (error) {
+    console/log("Erreur pas de constraint pour ce juror sur ce slot " +error);
+    return [{available:false}]
+  }
+  
+};
