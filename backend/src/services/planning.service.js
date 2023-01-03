@@ -16,9 +16,9 @@ exports.build = async (id) => {
     let jurors = serie.jurors;
     let rooms = serie.rooms;
     let slots = serie.slots;
-    let juries = juryService.getAll(id);
+    let juries = await juryService.getAll(id);
 
-    return await orderJury(id, students);
+    return await orderJury(juries, students);
 
     return students;
   };
@@ -58,60 +58,73 @@ exports.checkSlots = () => {
   /* erreur si false (plus tard) */
 }
 
-async function orderJury(id, students) {
+async function orderJury(juries, students) {
   let coeff_juries = [];
-  // get data
-  let juries = await db.juries          // TODO: create and move this rq tp jury service [ FROM HERE ...
-    .findAll({
-      where: { serieId: id },
-      include: [
-        {
-          model: db.jurors,
-          as: "master",
-          include: [
-            {
-              model: db.constraints,
-              as: "constraints",
-            },
-          ],
-        },
-        {
-          model: db.jurors,
-          as: "teacher1",
-          include: [
-            {
-              model: db.constraints,
-              as: "constraints",
-            },
-          ],
-        },
-        {
-          model: db.jurors,
-          as: "teacher2",
-          include: [
-            {
-              model: db.constraints,
-              as: "constraints",
-            },
-          ],
-        },
-      ],
-      //                                                      ... TO HERE ]
-    }).then((res) => {
-      // calculates coeffs
-      let juries = res;
-      juries.forEach(jury => {
-        //let coeff_map = students.findAll({where: {masterId: jury.masterId}}).length;
-        let coeff_map = 0;
-        coeff_juries.push({
-          idJury: jury.id,
-          coeff_map: coeff_map
-        })
-      });
-      return res;
-    });
-    // ordey by coef
-    console.log(coeff_juries);
+
+  // get values
+  juries.forEach(jury => {
+    // gets the number of stutents this MAP has
+    let nb_stu_map = students.filter(student =>  student.masterId === jury.masterId).length;
+    coeff_juries.push({
+      idJury: jury.id,
+      nb_stu_map: nb_stu_map,
+      coeff_map_1 : 0,
+      coeff_map_2 : 0,
+      coeff_map_3 : 0,
+      coeff_map_scale_1 : 0,
+      //coeff_map_scale_2 : 0,
+    })
+  });
+
+  // calulates the sum total of the nb_stu_map values
+  let sum_nb_stu_map = coeff_juries.reduce((previousValue, currentItem ) => previousValue + currentItem.nb_stu_map, 0);
+  // calculates the average of the nb_stu_map values
+  let avg_nb_stu_map = sum_nb_stu_map / coeff_juries.length;
+  /*
+  // calculates min and max of the nb_stu_map values
+  let min_nb_stu_map = coeff_juries.reduce((previousValue, currentItem ) => Math.min(previousValue, currentItem.nb_stu_map), Infinity);
+  let max_nb_stu_map = coeff_juries.reduce((previousValue, currentItem ) => Math.max(previousValue, currentItem.nb_stu_map), -Infinity);
+  */
+
+  console.log(sum_nb_stu_map);
+  console.log(avg_nb_stu_map);
+
+  // TODO: no need of all these calculation : just move nb_stu_map to [0-1] scale
+
+  // calculates coeffs
+  coeff_juries.forEach(jury => {
+    jury.coeff_map_1 = Math.abs(jury.nb_stu_map - avg_nb_stu_map);
+    jury.coeff_map_2 = jury.nb_stu_map / avg_nb_stu_map;
+    jury.coeff_map_3 = jury.nb_stu_map / sum_nb_stu_map;
+  });
+
+  // calculates min and max of the coeff_map_1 values
+  let min_coeff_map_1 = coeff_juries.reduce((previousValue, currentItem ) => Math.min(previousValue, currentItem.coeff_map_1), Infinity);
+  let max_coeff_map_1 = coeff_juries.reduce((previousValue, currentItem ) => Math.max(previousValue, currentItem.coeff_map_1), -Infinity);
+
+  // move scale to [0-1]
+  // src : https://karbotronics.com/blog/2020-02-28-formule-changement-echelle-min-et-max/
+  var changeScale = (value) => ((1 - 0) / (max_coeff_map_1 - min_coeff_map_1)) * (value - min_coeff_map_1) + 0;
+  coeff_juries.forEach(jury => {
+    jury.coeff_map_scale_1 = changeScale(jury.coeff_map_1);
+  });
+
+  /*
+  // calculates min and max of the coeff_map_1 values
+  let min_coeff_map_2 = coeff_juries.reduce((previousValue, currentItem ) => Math.min(previousValue, currentItem.coeff_map_2), Infinity);
+  let max_coeff_map_2 = coeff_juries.reduce((previousValue, currentItem ) => Math.max(previousValue, currentItem.coeff_map_2), -Infinity);
+
+  // move scale to [0-1]
+  var changeScale = (value) => ((1 - 0) / (max_coeff_map_2 - min_coeff_map_2)) * (value - min_coeff_map_2) + 0;
+  coeff_juries.forEach(jury => {
+    jury.coeff_map_scale_2 = changeScale(jury.coeff_map_2);
+  });
+  */
+
+
+  // order by coeff
+  console.table(coeff_juries);
+
   return juries;
   /* retourne un tableau de liste d'id des jury triés (jury avec les MAP qui s'occupent de beaucoup d'étudiant en premier...)*/
 }
