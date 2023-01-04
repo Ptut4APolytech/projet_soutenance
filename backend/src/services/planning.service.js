@@ -65,30 +65,52 @@ async function orderJury(juries, students) {
   juries.forEach(jury => {
     // gets the number of stutents this MAP has
     let nb_stu_map = students.filter(student =>  student.masterId === jury.masterId).length;
+    // gets the number of slots available for this jury
+    let nb_dispo_jury = dispoJury(jury.id).length;
     coeff_juries.push({
       idJury: jury.id,
       nb_stu_map: nb_stu_map,
-      coeff_map : 0,
+      nb_dispo_jury: nb_dispo_jury,
+      coeff_map: 0,
+      coeff_dispo_jury: 0,
+      coeff: 0,
     })
   });
 
-  // calculates min and max of the nb_stu_map values
-  let min_nb_stu_map = coeff_juries.reduce((previousValue, currentItem ) => Math.min(previousValue, currentItem.nb_stu_map), Infinity);
-  let max_nb_stu_map = coeff_juries.reduce((previousValue, currentItem ) => Math.max(previousValue, currentItem.nb_stu_map), -Infinity);
+  // functions to get min and max from values
+  var getMin = (tab, index) => tab.reduce((previousValue, currentItem ) => Math.min(previousValue, currentItem[index]), Infinity);
+  var getMax = (tab, index) => tab.reduce((previousValue, currentItem ) => Math.max(previousValue, currentItem[index]), -Infinity);
 
+  // calculates min and max of the nb_stu_map values
+  let min_nb_stu_map = getMin(coeff_juries, "nb_stu_map");
+  let max_nb_stu_map = getMax(coeff_juries, "nb_stu_map");
+
+  // calculates min and mox of the nb_dispo_jury values
+  let min_nb_dispo_jury = getMin(coeff_juries, "nb_dispo_jury");
+  let max_nb_dispo_jury = getMax(coeff_juries, "nb_dispo_jury");
 
   // move scale to [0-1]
   // src : https://karbotronics.com/blog/2020-02-28-formule-changement-echelle-min-et-max/
-  var changeScale = (value) => ((1 - 0) / (max_nb_stu_map - min_nb_stu_map)) * (value - min_nb_stu_map) + 0;
+  var changeScale = (value, min, max) => ((1 - 0) / (max - min)) * (value - min) + 0;
+
+  // calculates coeffs
   coeff_juries.forEach(jury => {
-    jury.coeff_map = changeScale(jury.nb_stu_map);
+    jury.coeff_map = changeScale(jury.nb_stu_map, min_nb_stu_map, max_nb_stu_map);
+    jury.coeff_dispo_jury = 1 - changeScale(jury.nb_dispo_jury, min_nb_dispo_jury, max_nb_dispo_jury);
+    jury.coeff = (jury.coeff_map + jury.coeff_dispo_jury) / 2;
   });
 
   // order by coeff
-  console.table(coeff_juries);
+  coeff_juries.sort((a, b) => {
+    return  b.coeff - a.coeff;
+  });
+  //console.table(coeff_juries);
 
-  return juries;
-  /* retourne un tableau de liste d'id des jury triés (jury avec les MAP qui s'occupent de beaucoup d'étudiant en premier...)*/
+  // array with only the juries ids (without values & coeffs calculations)
+  let juries_ids = coeff_juries.map((item) => item.idJury);
+
+  return juries_ids;
+  /* retourne un tableau de liste d'id des jury triés (jury avec les MAP qui s'occupent de beaucoup d'étudiants et/ou avec peu de dispo en premier... )*/
 }
 
 exports.checkPlanning = () => {
