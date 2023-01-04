@@ -68,59 +68,21 @@ async function orderJury(juries, students) {
     coeff_juries.push({
       idJury: jury.id,
       nb_stu_map: nb_stu_map,
-      coeff_map_1 : 0,
-      coeff_map_2 : 0,
-      coeff_map_3 : 0,
-      coeff_map_scale_1 : 0,
-      //coeff_map_scale_2 : 0,
+      coeff_map : 0,
     })
   });
 
-  // calulates the sum total of the nb_stu_map values
-  let sum_nb_stu_map = coeff_juries.reduce((previousValue, currentItem ) => previousValue + currentItem.nb_stu_map, 0);
-  // calculates the average of the nb_stu_map values
-  let avg_nb_stu_map = sum_nb_stu_map / coeff_juries.length;
-  /*
   // calculates min and max of the nb_stu_map values
   let min_nb_stu_map = coeff_juries.reduce((previousValue, currentItem ) => Math.min(previousValue, currentItem.nb_stu_map), Infinity);
   let max_nb_stu_map = coeff_juries.reduce((previousValue, currentItem ) => Math.max(previousValue, currentItem.nb_stu_map), -Infinity);
-  */
 
-  console.log(sum_nb_stu_map);
-  console.log(avg_nb_stu_map);
-
-  // TODO: no need of all these calculation : just move nb_stu_map to [0-1] scale
-
-  // calculates coeffs
-  coeff_juries.forEach(jury => {
-    jury.coeff_map_1 = Math.abs(jury.nb_stu_map - avg_nb_stu_map);
-    jury.coeff_map_2 = jury.nb_stu_map / avg_nb_stu_map;
-    jury.coeff_map_3 = jury.nb_stu_map / sum_nb_stu_map;
-  });
-
-  // calculates min and max of the coeff_map_1 values
-  let min_coeff_map_1 = coeff_juries.reduce((previousValue, currentItem ) => Math.min(previousValue, currentItem.coeff_map_1), Infinity);
-  let max_coeff_map_1 = coeff_juries.reduce((previousValue, currentItem ) => Math.max(previousValue, currentItem.coeff_map_1), -Infinity);
 
   // move scale to [0-1]
   // src : https://karbotronics.com/blog/2020-02-28-formule-changement-echelle-min-et-max/
-  var changeScale = (value) => ((1 - 0) / (max_coeff_map_1 - min_coeff_map_1)) * (value - min_coeff_map_1) + 0;
+  var changeScale = (value) => ((1 - 0) / (max_nb_stu_map - min_nb_stu_map)) * (value - min_nb_stu_map) + 0;
   coeff_juries.forEach(jury => {
-    jury.coeff_map_scale_1 = changeScale(jury.coeff_map_1);
+    jury.coeff_map = changeScale(jury.nb_stu_map);
   });
-
-  /*
-  // calculates min and max of the coeff_map_1 values
-  let min_coeff_map_2 = coeff_juries.reduce((previousValue, currentItem ) => Math.min(previousValue, currentItem.coeff_map_2), Infinity);
-  let max_coeff_map_2 = coeff_juries.reduce((previousValue, currentItem ) => Math.max(previousValue, currentItem.coeff_map_2), -Infinity);
-
-  // move scale to [0-1]
-  var changeScale = (value) => ((1 - 0) / (max_coeff_map_2 - min_coeff_map_2)) * (value - min_coeff_map_2) + 0;
-  coeff_juries.forEach(jury => {
-    jury.coeff_map_scale_2 = changeScale(jury.coeff_map_2);
-  });
-  */
-
 
   // order by coeff
   console.table(coeff_juries);
