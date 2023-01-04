@@ -19,12 +19,12 @@ exports.build = async (id) => {
     let slots = serie.slots;
     let juries = await juryService.getAll(id);
 
-    return checkJurorSlot(1, 1);
+    return checkSlot(students.length, slots.length, rooms.length);
     return students;
   };
 
 
-exports.checkJury = () => {
+exports.checkJury = () => { 
   return [];
   // FORMAT TABLEAU RETOURNÉ
   /*
@@ -41,19 +41,19 @@ exports.checkJury = () => {
   */
 }
 
-async function getJurorSlot   (idJuror, idSlot) {
+async function getJurorSlot(idJuror, idSlot){
   /* return true si juré disponnible sur ce créenau horaire, false sinon */
 
   let constraintsJurorSlot = await constraintsService.checkJurorSlot(idJuror, idSlot);
   if (constraintsJurorSlot.length != 1) { // si on as plusieur contrainte sur un juré pour un slot, on devrais déclancher une erreur
-    console.log("Erreur sur la recherche de constraint d'un Juror, idJuror : "+ idJuror +", idSlot : " + idSlot +"    Nombre de contrainte trouvée : " + constraintsJurorSlot.length);
+    console.log("Erreur : sur la recherche de constraint d'un Juror, idJuror : "+ idJuror +", idSlot : " + idSlot +"    Nombre de contrainte trouvée : " + constraintsJurorSlot.length);
     return false;
   }
   return constraintsJurorSlot[0].available;
 }
 
 
-async function slotAvailabilityJury (Jury ,slotsValide)  {
+async function slotAvailabilityJury(Jury ,slotsValide) {
   // Get the constraints of each juror
   let posts  = ['master','teacher1','teacher2'];
   for (const jurorPost  of posts ) {
@@ -68,7 +68,11 @@ async function slotAvailabilityJury (Jury ,slotsValide)  {
   /* the table of the list of available slots between the three jurors of the juror */
 }
 
-exports.checkSlots = () => {
+function checkSlot(StudentsLength, SlotLength, roomsLength) {
+  if (StudentsLength > SlotLength * roomsLength){
+    console.log("Erreur : Nombre d'étudiant supérieur au nombre de salle * nombre de créneau horaire");
+    return false;
+  }
   return true;
   /* return true si le nombre de salles x le nombre de slots >= nopbre d'étudiants, false sinon */
   /* erreur si false (plus tard) */
