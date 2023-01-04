@@ -5,11 +5,5 @@ module.exports = (sequelize, Sequelize) => {
     },
   });
 
-  sequelize.models.juror.hasMany(Constraint, { as: "constraints" });
-  Constraint.belongsTo(sequelize.models.juror, { foreignKey: "jurorId" });
-
-  sequelize.models.slot.hasMany(Constraint, { as: "constraints" });
-  Constraint.belongsTo(sequelize.models.slot, { foreignKey: "slotId" });
-
   return Constraint;
 };
