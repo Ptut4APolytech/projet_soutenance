@@ -5,8 +5,5 @@ module.exports = (sequelize, Sequelize) => {
     },
   });
 
-  sequelize.models.serie.hasMany(Room, { as: "rooms" });
-  Room.belongsTo(sequelize.models.serie, { foreignKey: "serieId" });
-
   return Room;
 };

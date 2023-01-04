@@ -15,22 +15,5 @@ module.exports = (sequelize, Sequelize) => {
     },
   });
 
-  sequelize.models.serie.hasMany(Student, { as: "students" });
-  Student.belongsTo(sequelize.models.serie, { foreignKey: "serieId" });
-
-  sequelize.models.juror.hasMany(Student, { as: "studentsAsMaster" });
-  Student.belongsTo(sequelize.models.juror, {
-    foreignKey: "masterId",
-    as: "master",
-  });
-
-  sequelize.models.juror.hasMany(Student, { as: "studentsAsTutor" });
-  Student.belongsTo(sequelize.models.juror, {
-    foreignKey: "tutorId",
-    as: "tutor",
-  });
-
-  Student.removeAttribute("jurorId");
-
   return Student;
 };
