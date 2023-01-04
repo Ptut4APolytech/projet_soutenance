@@ -52,10 +52,20 @@ async function getJurorSlot   (idJuror, idSlot) {
   return constraintsJurorSlot[0].available;
 }
 
-exports.availableJury = (idJury) => {
-  return [];
-  /* le tableau de la liste des slots disponnibles entre les trois jurés du juré */
-  /* erreur si tableau vide (plus tard) */
+
+async function slotAvailabilityJury (Jury ,slotsValide)  {
+  // Get the constraints of each juror
+  let posts  = ['master','teacher1','teacher2'];
+  for (const jurorPost  of posts ) {
+    let contraints = Jury[jurorPost ]['constraints'];
+    // remove unavailable slots
+    for (let constraint of contraints) {
+      slotsValide = slotsValide.filter(slot => !(slot["id"] == constraint["slotId"] && constraint["available"] == false));
+    }
+  }
+  
+  return slotsValide;
+  /* the table of the list of available slots between the three jurors of the juror */
 }
 
 exports.checkSlots = () => {
