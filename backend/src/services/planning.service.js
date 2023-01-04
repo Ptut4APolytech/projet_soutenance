@@ -40,7 +40,7 @@ exports.checkJury = () => {
   */
 }
 
-async function checkJurorSlot  (idJuror, idSlot) {
+async function getJurorSlot   (idJuror, idSlot) {
   /* return true si juré disponnible sur ce créenau horaire, false sinon */
 
   let constraintsJurorSlot = await constraintsService.checkJurorSlot(idJuror, idSlot);
@@ -48,8 +48,7 @@ async function checkJurorSlot  (idJuror, idSlot) {
     console.log("Erreur sur la recherche de constraint d'un Juror, idJuror : "+ idJuror +", idSlot : " + idSlot +"    Nombre de contrainte trouvée : " + constraintsJurorSlot.length);
     return false;
   }
-  return constraintsJurorSlot[0].available;   
-  
+  return constraintsJurorSlot[0].available;
 }
 
 exports.dispoJury = (idJury) => {
