@@ -16,9 +16,12 @@ exports.build = async (id) => {
     let jurors = serie.jurors;
     let rooms = serie.rooms;
     let slots = serie.slots;
-    let juries = juryService.getAll(id);
+    let juries = await juryService.getAll(id);
 
-    return students;
+    // slotAvailabilityJury(juries[0], 1);
+
+    // return juries[0];
+    return slotAvailabilityJury(juries[0], 1);;
   };
 
 
@@ -44,8 +47,20 @@ exports.checkJurorSlot = (idJuror, idSlot) => {
   /* return true si juré disponnible sur ce créenau horaire, false sinon */
 }
 
-exports.dispoJury = (idJury) => {
-  return [];
+async function slotAvailabilityJury (Jury ,idSerie)  {
+  // créer le tableau de la liste des slots disponnibles
+  slotsValide = await slotService.getserieId(idSerie);
+  // recupérer les constraint de chaque juré
+  let name = ['master','teacher1','teacher2'];
+  for (const postJuror of name) {
+    let contraints = Jury[postJuror]['constraints'];
+    // supprimer les slots indisponnibles
+    for (let constraint of contraints) {
+      slotsValide = slotsValide.filter(slot => !(slot["id"] == constraint["slotId"] && constraint["available"] == false));
+    }
+  }
+  
+  return slotsValide;
   /* le tableau de la liste des slots disponnibles entre les trois jurés du juré */
   /* erreur si tableau vide (plus tard) */
 }

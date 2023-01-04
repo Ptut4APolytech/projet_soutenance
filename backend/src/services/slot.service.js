@@ -6,3 +6,8 @@ exports.createMany = (slots, serieId) => {
   });
   return db.slots.bulkCreate(slots);
 };
+
+
+exports.getserieId = (serieId) => {
+  return db.slots.findAll({where: { serieId: serieId }});
+};
