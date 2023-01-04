@@ -23,6 +23,7 @@ db.sequelize
   .sync()
   .then(() => {
     console.log("Synced db.");
+    initDb();
   })
   .catch((err) => {
     console.log("Failed to sync db: " + err.message);
@@ -32,5 +33,14 @@ module.exports = app;
 
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
+require("./routes/auth.route")(app);
+require("./routes/user.route")(app);
 require("./routes/serie.route")(app);
 require("./routes/constraint.route")(app);
+
+function initDb() {
+    if (db.roles.findAll().length != 2) return;
+    db.roles.destroy();
+    db.roles.create({ id: 1, name: "user" });
+    db.roles.create({ id: 2, name: "admin" });
+}
