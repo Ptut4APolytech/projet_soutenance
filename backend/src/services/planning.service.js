@@ -18,8 +18,6 @@ exports.build = async (id) => {
     let slots = serie.slots;
     let juries = await juryService.getAll(id);
 
-    return await orderJury(juries, students);
-
     return students;
   };
 
@@ -46,7 +44,7 @@ exports.checkJurorSlot = (idJuror, idSlot) => {
   /* return true si juré disponnible sur ce créenau horaire, false sinon */
 }
 
-exports.dispoJury = (idJury) => {
+exports.availableJury = (idJury) => {
   return [];
   /* le tableau de la liste des slots disponnibles entre les trois jurés du juré */
   /* erreur si tableau vide (plus tard) */
@@ -58,7 +56,15 @@ exports.checkSlots = () => {
   /* erreur si false (plus tard) */
 }
 
-async function orderJury(juries, students) {
+/**
+ * Sorts the juries by putting the ones whose MAP have the most students and the ones with the least availability first.
+ * 
+ * @param {array[Jury]} juries the juries to sort
+ * @param {array[Student]} students the students to count how many the MAPs are in charge of
+ * @param {array[Slot]} slots ths slots to check the availablity of the juries
+ * @returns {array[int]} the sorted array of juries ids
+ */
+function orderJury(juries, students, slots) {
   let coeff_juries = [];
 
   // get values
@@ -66,7 +72,7 @@ async function orderJury(juries, students) {
     // gets the number of stutents this MAP has
     let nb_stu_map = students.filter(student =>  student.masterId === jury.masterId).length;
     // gets the number of slots available for this jury
-    let nb_dispo_jury = dispoJury(jury.id).length;
+    let nb_dispo_jury = slotAvailabilityJury(jury.id, slots).length;
     coeff_juries.push({
       idJury: jury.id,
       nb_stu_map: nb_stu_map,
@@ -104,13 +110,11 @@ async function orderJury(juries, students) {
   coeff_juries.sort((a, b) => {
     return  b.coeff - a.coeff;
   });
-  //console.table(coeff_juries);
 
   // array with only the juries ids (without values & coeffs calculations)
   let juries_ids = coeff_juries.map((item) => item.idJury);
 
   return juries_ids;
-  /* retourne un tableau de liste d'id des jury triés (jury avec les MAP qui s'occupent de beaucoup d'étudiants et/ou avec peu de dispo en premier... )*/
 }
 
 exports.checkPlanning = () => {
