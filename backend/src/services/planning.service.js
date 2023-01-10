@@ -19,7 +19,7 @@ exports.build = async (id) => {
     let slots = serie.slots;
     let juries = await juryService.getAll(id);
 
-    return checkError(students, slots, rooms);
+    return checkError(students, slots, rooms, juries);
     return students;
   };
 
@@ -149,9 +149,15 @@ exports.checkPlanning = () => {
   FONCTION PLACER LES JURY DANS LES SALLES
 */
 
+/********************* JURY FUNCTIONS **************************/
 
-function checkError(students, slots, rooms){
+function checkError(students, slots, rooms, juries){
   /* return string si aucune erreur, false sinon */
+
+  let juriesComplete = checkJuriesComplete(juries);
+  if (juriesComplete.length != 0){
+    return juriesComplete;
+  }
 
   return checkSlotRoom(students.length, slots.length, rooms.length);
   return true;
@@ -166,4 +172,38 @@ function checkSlotRoom(StudentsLength, SlotLength, roomsLength) {
   return true;
   /* return true si le nombre de salles x le nombre de slots >= nopbre d'étudiants, false sinon */
   /* erreur si false (plus tard) */
+}
+
+/**
+ * Checks if all juries respect the conditions, meaning they all have 3 jurors and at least one juror is info related.
+ * @param {array[Jury]} juries the list of juries to check
+ * @returns an empty array if all the juries complete the conditions, an array with error message if some juries do not.
+ */
+function checkJuriesComplete(juries){
+  let err = []
+  juries.forEach(jury => {
+    let r = checkJuryComplete(jury)
+    if (r !== null)
+    {
+      err.push(r);
+    }
+  });
+  return err;
+}
+
+/**
+ * Checks if this jury respects the conditions, meaning it has all 3 jurors and at least one juror is info related.
+ * @param {Jury} jury the jury to check
+ * @returns null if this jury completes the conditions, a string with the error message otherwise
+ */
+function checkJuryComplete(jury){
+  if (jury.master != null && jury.teacher1 != null && jury.teacher2 != null){
+    if(jury.teacher1.infoRelated || jury.teacher2.infoRelated){
+      return null;
+    }
+    return "Aucun des jurés " + jury.teacher1.firstName + " " + jury.teacher1.lastName + " et " 
+                              + jury.teacher2.firstName + " " + jury.teacher2.lastName +
+                                " du jury n°" + jury.id + " ne sont des professeurs d'informatique."
+  }
+  return "Il manque des jurés pour le jury n°"+ jury.id;
 }
