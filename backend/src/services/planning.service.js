@@ -18,9 +18,9 @@ exports.build = async (id) => {
     let rooms = serie.rooms;
     let slots = serie.slots;
     let juries = await juryService.getAll(id);
-
-    return checkError(students, slots, rooms);
-    return students;
+    
+    return checkError(students, juries, slots, rooms);
+    
   };
 
 
@@ -65,7 +65,7 @@ async function slotAvailabilityJury(Jury ,slotsValide) {
       slotsValide = slotsValide.filter(slot => !(slot["id"] == constraint["slotId"] && constraint["available"] == false));
     }
   }
-  
+
   return slotsValide;
   /* the table of the list of available slots between the three jurors of the juror */
 }
@@ -150,20 +150,70 @@ exports.checkPlanning = () => {
 */
 
 
-function checkError(students, slots, rooms){
-  /* return string si aucune erreur, false sinon */
+/**
+ * find general errors, which can prevent the calculation of the schedule.
+ * @param {array[Jury]} juries the list of juries to check
+ * @param {array[students]} students the list of student 
+ * @param {array[slots]} slots the list of slots in the series 
+ * @param {array[rooms]} rooms the list of rooms for the series
+ * @param {array[Jury]} juries the list of juries to check
+ * 
+ * @returns a table with all the errors, if it is empty, the schedule calculation can be done
+ */
+async function checkError(students, juries, slots, rooms){
+  /* return array with all erreur */
+  juries.forEach(async jury => {
+    let reponse = await checkSlotAvailabilityJury(jury, slots, students);
+    if (reponse.length != 0){
+      return reponse;
+    }
+  });
 
-  return checkSlotRoom(students.length, slots.length, rooms.length);
-  return true;
+  reponse = checkSlotRoom(students.length, slots.length, rooms.length);
+  if (reponse.length != 0){
+    return reponse;
+  }
+
+  return [];
 }
 
 
+/**
+ * control the availability of jurie according to their number of students
+ * 
+ * @returns error 
+ */
+
+async function  checkSlotAvailabilityJury(Jurie, slots, students){
+  
+  //find the number of possible slots
+  let slotAvailability = await slotAvailabilityJury(Jurie, slots);
+  let nbSlotAvailability = slotAvailability.length;
+  if (nbSlotAvailability == 0){
+    return ["Erreur : Aucun créneau horaire disponible pour le jurie n°"+ Jurie.id +" : \n" + Jurie.master.firstName + " "+ Jurie.master.lastName + "\n" + Jurie.teacher1.firstName + " "+ Jurie.teacher1.lastName + "\n"+ Jurie.teacher2.firstName + " "+ Jurie.teacher2.lastName + "\n"];
+  }
+
+  // find number of student in the master 
+  let nbStudentOfMaster = 0;
+  for(let student of students){
+    if(student.masterId == Jurie.master.id){
+      nbStudentOfMaster++;
+    }
+  }
+  if(nbSlotAvailability < nbStudentOfMaster){
+    return ["Erreur : Nombre de créneau horaire disponible inférieur au nombre d'étudiant du MAP pour le jurie n°"+ Jurie.id +" : \n" + Jurie.master.firstName + " "+ Jurie.master.lastName + "\n" + Jurie.teacher1.firstName + " "+ Jurie.teacher1.lastName + "\n"+ Jurie.teacher2.firstName + " "+ Jurie.teacher2.lastName + "\n"];
+  }
+  return [];
+}
+
+/**
+ * Controls the number of possible places compared to the number of students
+ * 
+ * @returns error 
+ */
 function checkSlotRoom(StudentsLength, SlotLength, roomsLength) {
   if (StudentsLength > SlotLength * roomsLength){
-    console.log("Erreur : Nombre d'étudiant supérieur au nombre de salle * nombre de créneau horaire");
-    return false;
+    return ["Erreur : Nombre d'étudiant supérieur au nombre de salle * nombre de créneau horaire"];
   }
-  return true;
-  /* return true si le nombre de salles x le nombre de slots >= nopbre d'étudiants, false sinon */
-  /* erreur si false (plus tard) */
+  return [];
 }
